@@ -15,6 +15,7 @@ export const register = async (req, res) => {
             CURP,
             email,
             password: passwordHash,
+            confirmPassword: passwordHash,
         })
 
         const userSaved = await newUser.save()
@@ -35,6 +36,8 @@ export const register = async (req, res) => {
 
         })
     } catch (error) {
+        console.log('req.body:', req.body)
+        console.log('error.message:', error.message)
         if(error.code === 11000){
            return res.status(400).json({ message: "El correo o CURP ye esta en uso" })
         }

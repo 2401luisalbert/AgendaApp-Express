@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { validateRegister } from "../../validations/validationForm";
-import { configureToastify } from "../../utils/toastifyConfig";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/authContext";
+// import { AuthContext } from "../../context/authContext";
+import { useForm } from "react-hook-form";
+import { registerRequest } from "../../api/auth";
 
 const initialForm = {
   name: "",
@@ -11,23 +11,16 @@ const initialForm = {
   email: "",
   CURP: "",
   password: "",
-  repeatPassword: "",
+  confirmPassword: "",
 };
 
 function RegisterFormComponent() {
-  const { register } = AuthContext();
+  // const { register } = AuthContext();
 
-  // Estado para almacenar los valores del formulario
-  const [form, setForm] = useState(initialForm);
+  const { register, handleSubmit } = useForm();
 
   // Estado para controlar la visualización de la contraseña
   const [showPass, setShowPass] = useState(false);
-
-  // Manejador de cambio de valores en los campos del formulario
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
-  };
 
   // Manejador de la visualización de la contraseña
   const handleShow = () => {
@@ -35,28 +28,19 @@ function RegisterFormComponent() {
   };
 
   // Manejador del envío del formulario
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // Validación del formulario de registro
-    const validationResult = validateRegister(form);
-
-    // Configuración de la notificación Toastify según el resultado de la validación
-    if (validationResult === "Datos correctos") {
-      const { repeatPassword, ...formData } = form;
-      await register(form);
-    } else {
-      configureToastify({
-        typeToast: "error",
-        validationResult: validationResult,
-      });
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      const res = await registerRequest(values);
+      console.log(res);
+    } catch (error) {
+      console.log(error); // Manejar el error de acuerdo a tus necesidades
     }
-  };
+  });
 
   return (
     <section>
       <h1 className="mt-2">Registrarse</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         {/* Campo Nombre */}
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -68,8 +52,7 @@ function RegisterFormComponent() {
             style={{ width: 300, height: 30, marginTop: -10 }}
             id="name"
             name="name"
-            value={form.name}
-            onChange={handleChange}
+            {...register("name", { required: true })}
           />
         </div>
 
@@ -84,8 +67,7 @@ function RegisterFormComponent() {
             style={{ width: 300, height: 30, marginTop: -10 }}
             id="firstName"
             name="firstName"
-            value={form.firstName}
-            onChange={handleChange}
+            {...register("firstName", { required: true })}
           />
         </div>
 
@@ -100,8 +82,22 @@ function RegisterFormComponent() {
             style={{ width: 300, height: 30, marginTop: -10 }}
             id="lastName"
             name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
+            {...register("lastName", { required: true })}
+          />
+        </div>
+
+         {/* Campo CURP */}
+         <div className="mb-3">
+          <label htmlFor="CURP" className="form-label">
+            CURP
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            style={{ width: 300, height: 30, marginTop: -10 }}
+            id="CURP"
+            name="CURP"
+            {...register("CURP", { required: true })}
           />
         </div>
 
@@ -116,26 +112,11 @@ function RegisterFormComponent() {
             style={{ width: 300, height: 30, marginTop: -10 }}
             id="email"
             name="email"
-            value={form.email}
-            onChange={handleChange}
+            {...register("email", { required: true })}
           />
         </div>
 
-        {/* Campo CURP */}
-        <div className="mb-3">
-          <label htmlFor="CURP" className="form-label">
-            CURP
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            style={{ width: 300, height: 30, marginTop: -10 }}
-            id="CURP"
-            name="CURP"
-            value={form.CURP}
-            onChange={handleChange}
-          />
-        </div>
+       
 
         {/* Campo Contraseña */}
         <div className="mb-3">
@@ -148,24 +129,22 @@ function RegisterFormComponent() {
             style={{ width: 300, height: 30, marginTop: -10 }}
             id="password"
             name="password"
-            value={form.password}
-            onChange={handleChange}
+            {...register("password", { required: true })}
           />
         </div>
 
         {/* Campo Repetir Contraseña */}
         <div className="mb-3">
-          <label htmlFor="repeatPassword" className="form-label">
+          <label htmlFor="confirmPassword" className="form-label">
             Repetir contraseña
           </label>
           <input
             type={showPass ? "text" : "password"}
             className="form-control"
             style={{ width: 300, height: 30, marginTop: -10 }}
-            id="repeatPassword"
-            name="repeatPassword"
-            value={form.repeatPassword}
-            onChange={handleChange}
+            id="confirmPassword"
+            name="confirmPassword"
+            {...register("confirmPassword", { required: true })}
           />
         </div>
 
@@ -190,9 +169,7 @@ function RegisterFormComponent() {
             Registrar
           </button>
         </div>
-        <Link to="/">
-          Registrarse
-        </Link>
+        <Link to="/">Iniciar sesión</Link>
       </form>
     </section>
   );

@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { configureToastify } from "../utils/toastifyConfig";
-import { createRegiterRequest } from "../api/resgister";
 
 export const authContext = createContext();
 

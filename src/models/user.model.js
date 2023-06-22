@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    confirmPassword: {
+        type: String,
+        required: true,
+        trim: true
+    },
     INE_CIC: {
         type: String,
         required: false,

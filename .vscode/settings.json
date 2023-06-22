@@ -3,8 +3,12 @@
         "AEIOU",
         "agendppdb",
         "libs",
+        "Manejador",
         "Passwords",
         "successfully",
-        "timestamps"
+        "timestamps",
+        "toastify",
+        "Toastify",
+        "validations"
     ]
 }
