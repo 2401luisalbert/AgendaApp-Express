@@ -35,6 +35,9 @@ export const register = async (req, res) => {
 
         })
     } catch (error) {
+        if(error.code === 11000){
+           return res.status(400).json({ message: "El correo o CURP ye esta en uso" })
+        }
         res.status(500).json({ message: error.message })
     }
 }

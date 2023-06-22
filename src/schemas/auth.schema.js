@@ -6,38 +6,53 @@ const regexCURP = /^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0
 
 
 export const registerSchema = z.object({
-    name: z.string({
-        required_error: "El nombre es obligatorio"
-    })
+    name: z
+        .string({
+            required_error: "El nombre es obligatorio"
+        })
         .regex(regexName, { message: "Nombre no valido" }),
 
-    firstName: z.string({
-        required_error: "Apellido paterno obligatorio"
-    })
+    firstName: z
+        .string({
+            required_error: "Apellido paterno obligatorio"
+        })
         .regex(regexName, { message: "Apellido no valido" }),
 
-    lastName: z.string({
-        required_error: "Apellido materno obligatorio"
-    })
+    lastName: z
+        .string({
+            required_error: "Apellido materno obligatorio"
+        })
         .regex(regexName, { message: "Apellido no valido" }),
 
-    CURP: z.string({
-        required_error: "CURP obligatoria"
-    })
+    CURP: z
+        .string({
+            required_error: "CURP obligatoria"
+        })
         .min(16, { message: "La CURP tiene un mínimo de 16 caracteres" })
         .regex(regexCURP, { message: "CURP no valida" }),
 
-    email: z.string({
-        required_error: "Correo obligatorio"
-    })
+    email: z
+        .string({
+            required_error: "Correo obligatorio"
+        })
         .email({ message: "Correo no valido" }),
 
-    password: z.string({
-        required_error: "Contraseña obligatoriA"
-    })
+    password: z
+        .string({
+            required_error: "Contraseña obligatoriA"
+        })
         .min(8, { message: "La contraseña tiene un mínimo de 8 caracteres" })
         .regex(regexPass, { message: "La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula y un número" }),
-})
+
+    confirmPassword: z
+        .string({
+            required_error: "Confirmar contraseña obligatorio",
+        })
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirm"], // path of error
+  });
+
 
 export const loginSchema = z.object({
     CURP: z.string({

@@ -1,0 +1,30 @@
+.image {
+  background-image: url("../../assets/portada.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+
+.image2 {
+  background-image: url("../../assets/portada.jpg");
+}
+
+.registerFormContainer {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+
+}
+
+ @media (max-width: 767px) {
+  .image {
+    margin-top:3rem;
+    height: 25%; 
+  }
+  .image2 {
+    height: 10%; 
+    background-position: top;
+    margin-bottom:3rem;
+  }
+} 
