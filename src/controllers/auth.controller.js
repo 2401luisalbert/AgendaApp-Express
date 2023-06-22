@@ -57,16 +57,17 @@ export const login = async (req, res) => {
 
         const userFound = await User.findOne({ CURP })
 
-        if (!userFound) return res.status(400).json({ message: "User not found" })
+        if (!userFound) return res.status(400).json([ "Usuario no encontrado" ])
 
         const isMatch = await bcrypt.compare(password, userFound.password)
 
-        if (!isMatch) return res.status(400).json({ message: "Incorrect password" })
+        if (!isMatch) return res.status(400).json(["La contraseña es incorrecta" ])
 
         const token = await createAccessToken({ id: userFound._id });
 
+        
         res.cookie('token', token)
-
+        
         res.json({
             id: userFound._id,
             name: userFound.name,
@@ -79,7 +80,7 @@ export const login = async (req, res) => {
             updateAt: userFound.updatedAt
         })
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json([error.message])
     }
 }
 

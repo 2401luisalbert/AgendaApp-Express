@@ -40,7 +40,6 @@ export const registerSchema = z.object({
         .string({
             required_error: "Contraseña obligatoriA"
         })
-        .min(8, { message: "La contraseña tiene un mínimo de 8 caracteres" })
         .regex(regexPass, { message: "La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula y un número" }),
 
     confirmPassword: z
@@ -57,12 +56,10 @@ export const loginSchema = z.object({
     CURP: z.string({
         required_error: "CURP obligatoria"
     })
-        .min(5, { message: "La CURP tiene un mínimo de 5 caracteres" })
         .regex(regexCURP, { message: "CURP no valida" }),
 
     password: z.string({
         required_error: "Contraseña obligatoria"
     })
-        .min(8, { message: "La contraseña tiene un mínimo de 8 caracteres" })
         .regex(regexPass, { message: "La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula y un número" }),
 }) 

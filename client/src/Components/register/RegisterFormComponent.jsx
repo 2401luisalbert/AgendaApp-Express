@@ -5,16 +5,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Loader from "./../loader";
 
-const initialForm = {
-  name: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  CURP: "",
-  password: "",
-  confirmPassword: "",
-};
-
 function RegisterFormComponent() {
   const navigate = useNavigate();
 

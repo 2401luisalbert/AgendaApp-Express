@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { registerRequest } from "./../api/auth";
+import { registerRequest, loginRequest } from "./../api/auth";
 import { configureToastify } from "../utils/toastifyConfig";
 
 export const AuthContext = createContext();
@@ -27,8 +27,19 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (user) => {
     try {
-      const res = await registerRequest(user);
-      setUser(res);
+      await registerRequest(user);
+      configureToastify({ typeToast: "success", message: "Datos correctos" });
+      return true;
+    } catch (error) {
+      setErrors(error.response.data);
+      console.log(error.response);
+      return false;
+    }
+  };
+
+  const signin = async (user) => {
+    try {
+      await loginRequest(user);
       configureToastify({ typeToast: "success", message: "Datos correctos" });
       return true;
     } catch (error) {
@@ -39,7 +50,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signup, user, isAuthenticated, errors }}>
+    <AuthContext.Provider
+      value={{ signup, signin, user, isAuthenticated, errors }}
+    >
       {children}
     </AuthContext.Provider>
   );
