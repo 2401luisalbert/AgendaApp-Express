@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { AuthContext } from "../../context/authContext";
+import { useAuth } from "../../context/authContext";
 import { useForm } from "react-hook-form";
-import { registerRequest } from "../../api/auth";
+import { useNavigate } from "react-router-dom";
 
 const initialForm = {
   name: "",
@@ -15,9 +15,14 @@ const initialForm = {
 };
 
 function RegisterFormComponent() {
-  // const { register } = AuthContext();
+  const { signup, errors: registerErrors } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   // Estado para controlar la visualización de la contraseña
   const [showPass, setShowPass] = useState(false);
@@ -30,8 +35,11 @@ function RegisterFormComponent() {
   // Manejador del envío del formulario
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await registerRequest(values);
-      console.log(res);
+      const signupResult = await signup(values);
+      if (!signupResult) {
+        return;
+      }
+      navigate("/");
     } catch (error) {
       console.log(error); // Manejar el error de acuerdo a tus necesidades
     }
@@ -40,6 +48,13 @@ function RegisterFormComponent() {
   return (
     <section>
       <h1 className="mt-2">Registrarse</h1>
+
+      {registerErrors.map((error, i) => (
+        <div className="alert alert-danger p-2 m-2" key={i}>
+          {error}
+        </div>
+      ))}
+
       <form onSubmit={onSubmit}>
         {/* Campo Nombre */}
         <div className="mb-3">
@@ -54,6 +69,9 @@ function RegisterFormComponent() {
             name="name"
             {...register("name", { required: true })}
           />
+          {errors.name && (
+            <small className="text-danger">Nombre es requerido</small>
+          )}
         </div>
 
         {/* Campo Apellido Paterno */}
@@ -69,6 +87,9 @@ function RegisterFormComponent() {
             name="firstName"
             {...register("firstName", { required: true })}
           />
+          {errors.firstName && (
+            <small className="text-danger">Apellido paterno es requerido</small>
+          )}
         </div>
 
         {/* Campo Apellido Materno */}
@@ -84,10 +105,13 @@ function RegisterFormComponent() {
             name="lastName"
             {...register("lastName", { required: true })}
           />
+          {errors.lastName && (
+            <small className="text-danger">Apellido materno es requerido</small>
+          )}
         </div>
 
-         {/* Campo CURP */}
-         <div className="mb-3">
+        {/* Campo CURP */}
+        <div className="mb-3">
           <label htmlFor="CURP" className="form-label">
             CURP
           </label>
@@ -99,6 +123,7 @@ function RegisterFormComponent() {
             name="CURP"
             {...register("CURP", { required: true })}
           />
+          {errors.CURP && <small className="text-danger">CURP requerida</small>}
         </div>
 
         {/* Campo Email */}
@@ -114,9 +139,10 @@ function RegisterFormComponent() {
             name="email"
             {...register("email", { required: true })}
           />
+          {errors.email && (
+            <small className="text-danger">Correo requerido</small>
+          )}
         </div>
-
-       
 
         {/* Campo Contraseña */}
         <div className="mb-3">
@@ -131,6 +157,9 @@ function RegisterFormComponent() {
             name="password"
             {...register("password", { required: true })}
           />
+          {errors.password && (
+            <small className="text-danger">Contraseña requerida</small>
+          )}
         </div>
 
         {/* Campo Repetir Contraseña */}
@@ -146,6 +175,11 @@ function RegisterFormComponent() {
             name="confirmPassword"
             {...register("confirmPassword", { required: true })}
           />
+          {errors.confirmPassword && (
+            <small className="text-danger">
+              Cofimacion de contraseña requerido
+            </small>
+          )}
         </div>
 
         {/* Opción Mostrar Contraseña */}

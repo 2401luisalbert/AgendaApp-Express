@@ -6,6 +6,12 @@ export const register = async (req, res) => {
     const { name, firstName, lastName, CURP, email, password } = req.body
     try {
 
+        const userFoundCurp = await User.findOne({ CURP });
+        if (userFoundCurp) return res.status(400).json(["Este CURP ya está registrado"]);
+
+        const userFoundEmail = await User.findOne({ email });
+        if (userFoundEmail) return res.status(400).json(["Este correo ya está registrado"]);
+
         const passwordHash = await bcrypt.hash(password, 10)
 
         const newUser = new User({
@@ -38,8 +44,8 @@ export const register = async (req, res) => {
     } catch (error) {
         console.log('req.body:', req.body)
         console.log('error.message:', error.message)
-        if(error.code === 11000){
-           return res.status(400).json({ message: "El correo o CURP ye esta en uso" })
+        if (error.code === 11000) {
+            return res.status(400).json({ message: "El correo o CURP ye esta en uso" })
         }
         res.status(500).json({ message: error.message })
     }

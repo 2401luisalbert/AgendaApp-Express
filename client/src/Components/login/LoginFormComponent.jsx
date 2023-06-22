@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { validateLogin } from "../../validations/validationForm";
 import { configureToastify } from "../../utils/toastifyConfig";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 import "react-toastify/dist/ReactToastify.css";
 
 // Estado inicial del formulario de inicio de sesión
@@ -15,6 +16,8 @@ const LoginFormComponent = () => {
   // Estado para almacenar los valores del formulario
   const [form, setForm] = useState(initialForm);
 
+  const { isAuthenticated, errors: registerErrors } = useAuth();
+
   // Estado para controlar la visualización de la contraseña
   const [showPass, setShowPass] = useState(false);
 
@@ -23,6 +26,10 @@ const LoginFormComponent = () => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
   };
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/login");
+  }, [isAuthenticated]);
 
   // Manejador de la visualización de la contraseña
   const handleShow = () => {

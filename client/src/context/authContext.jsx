@@ -1,24 +1,46 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { registerRequest } from "./../api/auth";
 import { configureToastify } from "../utils/toastifyConfig";
 
-export const authContext = createContext();
+export const AuthContext = createContext();
 
-export const AuthContext = () => {
-  const context = useContext(authContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("No se esta usando n AuthProvider");
+  }
   return context;
 };
 
-export function AuthProvider({ children }) {
-  const register = (form) => {
-    console.log(form)
-    createRegiterRequest(form);
-    configureToastify({
-      typeToast: "success",
-      validationResult: "datos correctos",
-    });
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrors([]);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [errors]);
+
+  const signup = async (user) => {
+    try {
+      const res = await registerRequest(user);
+      setUser(res);
+      configureToastify({ typeToast: "success", message: "Datos correctos" });
+      return true;
+    } catch (error) {
+      setErrors(error.response.data);
+      console.log(error.response);
+      return false;
+    }
   };
 
   return (
-    <authContext.Provider value={{ register }}>{children}</authContext.Provider>
+    <AuthContext.Provider value={{ signup, user, isAuthenticated, errors }}>
+      {children}
+    </AuthContext.Provider>
   );
-}
+};
