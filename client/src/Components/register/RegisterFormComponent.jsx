@@ -48,7 +48,7 @@ function RegisterFormComponent() {
         <Loader />
       ) : (
         <>
-          <h1 className="mt-2">Registrarse</h1>
+          <h1>Registrarse</h1>
 
           {registerErrors.map((error, i) => (
             <div className="alert alert-danger p-2 m-2" key={i}>

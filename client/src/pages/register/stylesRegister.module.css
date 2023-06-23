@@ -3,11 +3,15 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100%;
+  height: 870px;
 }
 
 .image2 {
   background-image: url("../../assets/portada.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 870px;
 }
 
 .registerFormContainer {
@@ -20,7 +24,7 @@
  @media (max-width: 767px) {
   .image {
     margin-top:3rem;
-    height: 25%; 
+    max-height: 25%; 
   }
   .image2 {
     height: 10%; 
