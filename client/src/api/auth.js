@@ -1,8 +1,9 @@
-import axios from "axios";
+import instance from "./axios";
 
-const API = 'http://localhost:3000/api'
+export const registerRequest = async userData => await instance.post(`/register`, userData);
 
-export const registerRequest = async userData =>  await axios.post(`${API}/register`, userData);
+export const loginRequest = async userData => await instance.post(`/login`, userData);
 
+export const logoutRequest = async () => await instance.post(`/logout`);
 
-export const loginRequest = async userData => await axios.post(`${API}/login`, userData);
+export const verifyTokenRequest = async () => instance.get('/verify')

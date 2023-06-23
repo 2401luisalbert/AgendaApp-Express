@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Loader from "./../loader";
+import Loader from "./../Loader";
 
 function RegisterFormComponent() {
   const navigate = useNavigate();

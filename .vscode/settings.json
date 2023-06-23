@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "AEIOU",
+        "agend",
         "agendppdb",
         "Cofimacion",
         "danger",
@@ -8,6 +9,8 @@
         "loader",
         "Loader",
         "Manejador",
+        "middlewares",
+        "Outlet",
         "pages",
         "Passwords",
         "signin",

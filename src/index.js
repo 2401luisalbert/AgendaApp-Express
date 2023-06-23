@@ -1,9 +1,12 @@
-import app from "./app.js"
-import { connectDB } from "./db.js"
+import app from "./app.js";
+import { connectDB } from "./db.js";
 
-const PUERTO = 3000
+const PUERTO = 3000;
 
-connectDB()
-app.listen(PUERTO, ()=>{
-    console.log(`>>> Servidor escuchando en el puerto ${PUERTO} 👍`)
-})
+// Conectarse a la base de datos
+connectDB();
+
+// Iniciar el servidor y escuchar en el puerto especificado
+app.listen(PUERTO, () => {
+  console.log(`>>> Servidor escuchando en el puerto ${PUERTO} 👍`);
+});

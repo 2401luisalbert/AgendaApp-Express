@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import { AuthProvider } from "./context/authContext";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<h1>Profile</h1>} />
+          <Route element={<ProtectedRoutes/>}>
+            <Route path="/profile" element={<h1>Profile</h1>} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
