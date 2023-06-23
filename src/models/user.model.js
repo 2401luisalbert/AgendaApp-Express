@@ -67,6 +67,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
         default: "user"
+    },
+    complement: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 }, {
     timestamps: true

@@ -47,14 +47,17 @@ export const register = async (req, res) => {
             curp: userSaved.CURP,
             email: userSaved.email,
             rol: userSaved.rol,
+            complement: userSaved.complement,
             createAt: userSaved.createdAt,
             updateAt: userSaved.updatedAt
         });
+
+
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(400).json({ message: "El correo o CURP ya está en uso" });
+            return res.status(400).json(["El correo o CURP ya está en uso"]);
         }
-        res.status(500).json({ message: error.message });
+        res.status(500).json([error.message]);
     }
 };
 
@@ -106,7 +109,7 @@ export const logout = async (req, res) => {
 export const profile = async (req, res) => {
     const userFound = await User.findById(req.user.id);
 
-    if (!userFound) return res.status(400).json({ message: "User not found" });
+    if (!userFound) return res.status(400).json(["User not found"]);
 
     // Enviar la respuesta con los datos del usuario
     res.json({
@@ -117,6 +120,7 @@ export const profile = async (req, res) => {
         curp: userFound.CURP,
         email: userFound.email,
         rol: userFound.rol,
+        complement: userFound.complement,
         createAt: userFound.createdAt,
         updateAt: userFound.updatedAt
     });
@@ -124,16 +128,16 @@ export const profile = async (req, res) => {
 
 export const verifyToken = async (req, res) => {
     const { token } = req.cookies;
-  
+
     if (!token) return res.status(400).json(['No autorizado']);
-  
+
     try {
         // Verificar y decodificar el token
         const decoded = jwt.verify(token, TOKEN_SECRET);
         const userFound = await User.findById(decoded.id);
-  
+
         if (!userFound) return res.status(401).json(['No autorizado']);
-  
+
         // Enviar la respuesta con los datos del usuario
         res.json({
             id: userFound._id,
@@ -143,6 +147,7 @@ export const verifyToken = async (req, res) => {
             curp: userFound.CURP,
             email: userFound.email,
             rol: userFound.rol,
+            complement: userFound.complement,
             createAt: userFound.createdAt,
             updateAt: userFound.updatedAt
         });
