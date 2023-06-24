@@ -49,12 +49,12 @@ const userSchema = new mongoose.Schema({
         required: false,
         trim: true,
     },
-    domicilio: {
+    address: {
         type: String,
         required: false,
         trim: true,
     },
-    num_tel: {
+    phoneNumber: {
         type: String,
         required: false,
         trim: true,

@@ -1,8 +1,8 @@
+import ModalComponent from "../../Components/homeProfile/ModalComponent";
 import { useAuth } from "../../context/authContext";
 
 const HomePage = () => {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <div>
@@ -14,6 +14,7 @@ const HomePage = () => {
           </li>
         ))}
       </ul>
+      <ModalComponent user={user} />
     </div>
   );
 };

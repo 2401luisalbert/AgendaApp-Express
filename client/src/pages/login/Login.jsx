@@ -10,7 +10,7 @@ function Login() {
     <div className={'container-fluid'}>
       <div className={`row vh-100 align-items-start align-items-md-center`}>
         {/* Div contenedor de la imagen */}
-        <div className={`col-md-7 img-fluid ${styles.image}`}></div>
+        <div className={`col-md-7 img-fluid vh-100 ${styles.image}`}></div>
         {/* Div contenedor del formulario */}
         <div className="col-12 col-md-5 d-flex align-items-center justify-content-center">
           <div className={`d-flex flex-column align-items-center ${styles.formContainer}`}>

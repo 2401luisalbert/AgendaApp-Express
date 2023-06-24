@@ -127,6 +127,9 @@ function RegisterFormComponent() {
                 id="CURP"
                 name="CURP"
                 {...register("CURP", { required: true })}
+                onChange={(e) => {
+                  e.target.value = e.target.value.toUpperCase();
+                }}
               />
               {errors.CURP && (
                 <small className="text-danger">CURP requerida</small>

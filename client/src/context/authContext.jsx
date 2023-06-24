@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   registerRequest,
+  updateRegisterRequest,
   loginRequest,
   logoutRequest,
   verifyTokenRequest,
 } from "./../api/auth";
 import { configureToastify } from "../utils/toastifyConfig";
 import Cookies from "js-cookie";
-import { set } from "mongoose";
 
 export const AuthContext = createContext();
 
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,32 +34,32 @@ export const AuthProvider = ({ children }) => {
   }, [errors]);
 
   useEffect(() => {
-  async function checkLogin() {
+    async function checkLogin() {
       const cookies = Cookies.get();
       if (!cookies.token) {
-        setIsAuthenticated(false)
-        setUser(null)
-        setLoading(false)
-        return
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+        return;
       }
       try {
         const res = await verifyTokenRequest(cookies.token);
-        if (!res.data){
+        if (!res.data) {
           setIsAuthenticated(false);
-          setLoading(false)
-          setUser(null)
-        } 
+          setLoading(false);
+          setUser(null);
+        }
 
         setIsAuthenticated(true);
-        setLoading(false)
+        setLoading(false);
         setUser(res.data);
       } catch (error) {
         setIsAuthenticated(false);
-        setLoading(true)
+        setLoading(true);
         setUser(null);
       }
     }
-    checkLogin()
+    checkLogin();
   }, []);
 
   const signup = async (user) => {
@@ -70,6 +70,20 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       setErrors(error.response.data);
       console.log(error.response);
+      return false;
+    }
+  };
+
+  const updateRegister = async (user) => {
+    try {
+      await updateRegisterRequest(user.id, user);
+      configureToastify({ typeToast: "success", message: "Datos correctos" });
+      return true;
+    } catch (error) {
+      console.log("error", error);
+      const responseErrors = error.response.data;
+      setErrors(responseErrors);
+      console.log(responseErrors);
       return false;
     }
   };
@@ -96,7 +110,16 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signup, signin, logout,loading, user, isAuthenticated, errors }}
+      value={{
+        signup,
+        updateRegister,
+        signin,
+        logout,
+        loading,
+        user,
+        isAuthenticated,
+        errors,
+      }}
     >
       {children}
     </AuthContext.Provider>

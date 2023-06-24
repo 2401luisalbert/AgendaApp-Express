@@ -61,6 +61,25 @@ export const register = async (req, res) => {
     }
 };
 
+export const updateRegister = async (req, res) => {
+    try {
+      // Actualiza los datos del usuario en la base de datos y devuelve el documento actualizado
+      const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true, // Devuelve el documento actualizado
+        runValidators: true, // Ejecuta las validaciones definidas en el modelo
+      });
+  
+      if (!updatedUser) {
+        return res.status(404).json(["Usuario no encontrado"]);
+      }
+  
+      // Envía la respuesta con los datos actualizados del usuario
+      res.json(updatedUser);
+    } catch (error) {
+      res.status(500).json([error.message]);
+    }
+  };
+  
 export const login = async (req, res) => {
     const { CURP, password } = req.body;
     try {

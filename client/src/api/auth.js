@@ -2,6 +2,8 @@ import instance from "./axios";
 
 export const registerRequest = async userData => await instance.post(`/register`, userData);
 
+export const updateRegisterRequest = async (id, userData) =>  await instance.put(`/register/${id}`, userData)
+
 export const loginRequest = async userData => await instance.post(`/login`, userData);
 
 export const logoutRequest = async () => await instance.post(`/logout`);
