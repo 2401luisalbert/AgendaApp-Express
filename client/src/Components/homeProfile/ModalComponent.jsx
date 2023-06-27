@@ -28,7 +28,7 @@ const ModalComponent = ({ userProfile }) => {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Modal title
+                  Terminando tu registro
                 </h1>
               </div>
               <div className="modal-body d-flex justify-content-center align-items-center">

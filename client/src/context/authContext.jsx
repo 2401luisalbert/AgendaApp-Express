@@ -14,7 +14,7 @@ export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("No se esta usando n AuthProvider");
+    throw new Error("No se está usando AuthProvider");
   }
   return context;
 };
@@ -32,6 +32,22 @@ export const AuthProvider = ({ children }) => {
 
     return () => clearTimeout(timer);
   }, [errors]);
+
+  const handleError = (error) => {
+    if (error.response) {
+      if (Array.isArray(error.response.data)) {
+        setErrors(error.response.data);
+      } else {
+        const errorMessage = error.response.data.error || "Error en el servidor";
+        setErrors([errorMessage]);
+      }
+    } else {
+      setErrors(["Ocurrió un error en el servidor"]);
+      console.error("Error de servidor:", error);
+    }
+    setLoading(false);
+  };
+  
 
   useEffect(() => {
     async function checkLogin() {
@@ -68,7 +84,7 @@ export const AuthProvider = ({ children }) => {
       configureToastify({ typeToast: "success", message: "Datos correctos" });
       return true;
     } catch (error) {
-      setErrors(error.response.data);
+      handleError(error);
       return false;
     }
   };
@@ -79,8 +95,7 @@ export const AuthProvider = ({ children }) => {
       configureToastify({ typeToast: "success", message: "Datos correctos" });
       return true;
     } catch (error) {
-      const responseErrors = error.response.data;
-      setErrors(responseErrors);
+      handleError(error);
       return false;
     }
   };
@@ -93,7 +108,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       return true;
     } catch (error) {
-      setErrors(error.response.data);
+      handleError(error);
       return false;
     }
   };
