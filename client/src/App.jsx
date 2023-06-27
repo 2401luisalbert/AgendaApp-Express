@@ -6,19 +6,22 @@ import Register from "./pages/register/Register";
 import { AuthProvider } from "./context/authContext";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
 import HomePage from "./pages/perfil/HomePage";
+import { UserProvider } from "./context/userContext";
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<ProtectedRoutes/>}>
-            <Route path="/profile" element={<HomePage/>} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/profile" element={<HomePage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </AuthProvider>
   );
 }

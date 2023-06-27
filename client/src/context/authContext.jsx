@@ -69,21 +69,18 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (error) {
       setErrors(error.response.data);
-      console.log(error.response);
       return false;
     }
   };
 
-  const updateRegister = async (user) => {
+  const updateRegister = async (id, user) => {
     try {
-      await updateRegisterRequest(user.id, user);
+      await updateRegisterRequest(id, user);
       configureToastify({ typeToast: "success", message: "Datos correctos" });
       return true;
     } catch (error) {
-      console.log("error", error);
       const responseErrors = error.response.data;
       setErrors(responseErrors);
-      console.log(responseErrors);
       return false;
     }
   };
@@ -96,7 +93,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       return true;
     } catch (error) {
-      console.log(error);
       setErrors(error.response.data);
       return false;
     }

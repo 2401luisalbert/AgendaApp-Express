@@ -32,31 +32,33 @@ function RegisterFormComponent() {
       setLoading(true);
       const signupResult = await signup(values);
       if (!signupResult) {
-        setLoading(false);
         return;
       }
-      setLoading(false);
       navigate("/");
     } catch (error) {
       console.log(error); // Manejar el error de acuerdo a tus necesidades
+    } finally {
+      setLoading(false);
     }
   });
 
   return (
-    <section>
+    <section className="d-flex align-items-center justify-content-center flex-column col-12">
+      <div className="col-10">
+            {registerErrors.map((error, i) => (
+              <p className="alert alert-danger p-2 m-2" key={i}>
+                {error}
+              </p>
+            ))}
+      </div>
       {loading ? (
         <Loader />
       ) : (
         <>
           <h1>Registrarse</h1>
 
-          {registerErrors.map((error, i) => (
-            <div className="alert alert-danger p-2 m-2" key={i}>
-              {error}
-            </div>
-          ))}
-
           <form onSubmit={onSubmit}>
+            
             {/* Campo Nombre */}
             <div className="mb-3">
               <label htmlFor="name" className="form-label">

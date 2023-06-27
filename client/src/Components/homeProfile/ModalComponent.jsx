@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ModalFormComponent from "./ModalFormComponent";
 
-const ModalComponent = (props) => {
-  const { user } = props;
-  const [showModal, setShowModal] = useState(false);
+const ModalComponent = ({ userProfile }) => {
+  const [showModal, setShowModal] = useState(userProfile.complement === false);
 
   useEffect(() => {
-    if (user.complement === false) {
-      setShowModal(true);
-    }
-  }, [user.complement]);
+    setShowModal(userProfile.complement === false);
+  }, [userProfile.complement]);
 
   const closeModal = () => {
     setShowModal(false);
@@ -34,8 +31,8 @@ const ModalComponent = (props) => {
                   Modal title
                 </h1>
               </div>
-              <div className="modal-body">
-                <ModalFormComponent closeModal={closeModal} user={user} />
+              <div className="modal-body d-flex justify-content-center align-items-center">
+                <ModalFormComponent closeModal={closeModal} />
               </div>
             </div>
           </div>

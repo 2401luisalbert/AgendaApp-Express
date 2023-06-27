@@ -1,9 +1,10 @@
 // Importación de módulos y configuración de Express
 import express from "express";
 import morgan from "morgan";
-import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import authRouter from "./routes/auth.routes.js";
+import profileRouter from "./routes/profile.routes.js";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(express.json()); // Middleware para analizar el cuerpo de las solicitude
 app.use(cookieParser()); // Middleware para analizar las cookies en las solicitudes
 
 // Rutas
-app.use("/api", authRouter); // Middleware para manejar las rutas relacionadas con la autenticación
+app.use("/api", authRouter);// Middleware para manejar las rutas relacionadas con la autenticación
+
+app.use("/api", profileRouter); 
 
 export default app;
