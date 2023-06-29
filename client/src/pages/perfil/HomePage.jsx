@@ -17,12 +17,13 @@ const HomePage = () => {
           <ul>
             {Object.entries(userProfile).map(([key, value]) => (
               <li key={key}>
-                <strong>{key}: </strong> {value}
+                <strong>{key}: </strong> {value.toString()}
               </li>
             ))}
           </ul>
         </div>
       )}
+      <img src={userProfile.image_Url} alt="" />
     </div>
   );
 };

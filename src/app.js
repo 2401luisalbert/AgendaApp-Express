@@ -1,27 +1,29 @@
-// Importación de módulos y configuración de Express
 import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRouter from "./routes/auth.routes.js";
 import profileRouter from "./routes/profile.routes.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Configuración de CORS para permitir solicitudes desde http://localhost:5173
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }));
 
-// Registro de middlewares
-app.use(morgan('dev')); // Middleware de registro de solicitudes en modo desarrollo
-app.use(express.json()); // Middleware para analizar el cuerpo de las solicitudes como JSON
-app.use(cookieParser()); // Middleware para analizar las cookies en las solicitudes
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
-// Rutas
-app.use("/api", authRouter);// Middleware para manejar las rutas relacionadas con la autenticación
+const x = app.use("/uploads/img/", express.static(join(__dirname, "uploads")));
 
-app.use("/api", profileRouter); 
+app.use("/api", authRouter);
+app.use("/api", profileRouter);
 
 export default app;

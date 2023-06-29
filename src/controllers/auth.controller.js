@@ -91,11 +91,21 @@ export const login = async (req, res) => {
   }
 };
 
+import path from "path";
+
+// ...
+
 export const updateRegister = async (req, res) => {
   try {
+    // Corregir la ruta de la imagen antes de guardarla en la base de datos
+    const updatedImagePath = req.file.path.replace(/\\/g, "/");
+
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        ...req.body,
+        image_Url: updatedImagePath, // Utilizar la ruta corregida
+      },
       {
         new: true,
         runValidators: true,
@@ -107,7 +117,7 @@ export const updateRegister = async (req, res) => {
     }
 
     res.status(200).json({
-    id: updatedUser._id,
+      id: updatedUser._id,
       name: updatedUser.name,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
@@ -119,13 +129,15 @@ export const updateRegister = async (req, res) => {
       INE_ID: updatedUser.INE_ID,
       phoneNumber: updatedUser.phoneNumber,
       complement: updatedUser.complement,
+      image_Url: updatedUser.image_Url,
       createAt: updatedUser.createdAt,
-      updateAt: updatedUser.updatedAt
+      updateAt: updatedUser.updatedAt,
     });
   } catch (error) {
     res.status(500).json({ error: "Ocurrió un error en el servidor" });
   }
 };
+
 
 
 export const logout = async (req, res) => {

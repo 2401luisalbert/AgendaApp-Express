@@ -8,7 +8,7 @@ export const profile = async (req, res) => {
             return res.status(400).json({ error: "Usuario no encontrado" });
         }
 
-        const { _id, name, firstName, lastName, CURP, email, rol, complement, address, INE_CIC, INE_ID, phoneNumber, createdAt, updatedAt } = userFound;
+        const { _id, name, firstName, lastName, CURP, email, rol, complement, address, INE_CIC, INE_ID, phoneNumber, image_Url, createdAt, updatedAt } = userFound;
 
         res.json({
             id: _id,
@@ -23,6 +23,7 @@ export const profile = async (req, res) => {
             INE_ID,
             phoneNumber,
             complement,
+            image_Url,
             createAt: createdAt,
             updateAt: updatedAt
         });
