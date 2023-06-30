@@ -4,6 +4,8 @@ import { useUser } from "../../context/userContext";
 
 const HomePage = () => {
   const { userProfile } = useUser();
+  const serverUrl = "http://localhost:3000";
+
 
   return (
     <div>
@@ -23,7 +25,8 @@ const HomePage = () => {
           </ul>
         </div>
       )}
-      <img src={userProfile.image_Url} alt="" />
+      <img src={`${serverUrl}/img/1688135520104.png`} alt="" />
+
     </div>
   );
 };

@@ -3,18 +3,12 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
+import path from 'path'; // Importar el módulo path
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
 
-    const palabraCortada = "libs"
-    const nuevaRuta = __dirname
-
-    const rutaFinal = palabraCortada.fil
-
-
-    const directory = nuevaRuta; // Directorio de destino de los archivos subidos
+    const directory = ('public/img')// Directorio de destino de los archivos subidos
 
     // Verificar si el directorio existe, si no, crearlo
     if (!fs.existsSync(directory)) {
