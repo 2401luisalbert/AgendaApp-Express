@@ -28,11 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
-// Agregar las líneas de registro de rutas absolutas aquí
-console.log("Absolute path to public folder:", publicPath);
-console.log("Absolute path to UTM.jpg:", path.join(publicPath, 'UTM.png'));
-
-app.use(express.static(publicPath));
+app.use("/public",express.static(publicPath));
 
 app.use("/api", authRouter);
 app.use("/api", profileRouter);

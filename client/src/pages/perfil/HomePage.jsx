@@ -1,11 +1,15 @@
 import React from "react";
 import ModalComponent from "../../Components/homeProfile/ModalComponent";
 import { useUser } from "../../context/userContext";
+import Loader from "../../Components/Loader";
 
 const HomePage = () => {
   const { userProfile } = useUser();
   const serverUrl = "http://localhost:3000";
 
+  if (!userProfile || !userProfile.image_Url) {
+    return <Loader/>;
+  }
 
   return (
     <div>
@@ -25,8 +29,7 @@ const HomePage = () => {
           </ul>
         </div>
       )}
-      <img src={`${serverUrl}/img/1688135520104.png`} alt="" />
-
+      <img src={`${serverUrl}/${userProfile.image_Url}`} alt="" />
     </div>
   );
 };
