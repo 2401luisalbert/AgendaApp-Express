@@ -10,7 +10,7 @@ const authRouter = Router();
 authRouter.post('/register', validateSchema(registerSchema), register);
 
 // Ruta para actualizar un usuario
-authRouter.put('/updateRegister/:id', upload.single("image_Url"), validateSchema(updateUserSchema), updateRegister);
+authRouter.put('/updateRegister/:id', upload.single("image_Profile"), validateSchema(updateUserSchema), updateRegister);
 
 // Ruta para iniciar sesión
 authRouter.post('/login', validateSchema(loginSchema), login);

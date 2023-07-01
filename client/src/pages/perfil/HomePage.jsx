@@ -7,7 +7,7 @@ const HomePage = () => {
   const { userProfile } = useUser();
   const serverUrl = "http://localhost:3000";
 
-  if (!userProfile || !userProfile.image_Url) {
+  if (!userProfile) {
     return <Loader/>;
   }
 
@@ -29,7 +29,7 @@ const HomePage = () => {
           </ul>
         </div>
       )}
-      <img src={`${serverUrl}/${userProfile.image_Url}`} alt="" />
+      <img src={`${serverUrl}/${userProfile.image_Profile}`} alt="" />
     </div>
   );
 };

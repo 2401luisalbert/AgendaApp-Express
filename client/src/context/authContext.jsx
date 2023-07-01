@@ -90,6 +90,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateRegister = async (id, user) => {
+    console.log("user", user)
     try {
       await updateRegisterRequest(id, user);
       configureToastify({ typeToast: "success", message: "Datos correctos" });

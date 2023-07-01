@@ -24,9 +24,6 @@ const storage = multer.diskStorage({
       return cb(new Error("Solo se permiten archivos en formato JPG o PNG."));
     }
 
-    const destination = req.destination || ""; // Obtener el valor de req.destination si está definido, de lo contrario asignar una cadena vacía
-    console.log("destination", destination)
-
     cb(null, `${Date.now()}.${ext}`);
   },
 });

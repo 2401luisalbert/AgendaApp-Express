@@ -14,9 +14,11 @@ const ModalFormComponent = ({ closeModal }) => {
   } = useForm();
 
   const onSubmit = handleSubmit(async (values) => {
+    console.log("values", values)
     try {
       setLoading(true);
       const updateRegisterResult = await updateRegister(user.id, values);
+      console.log("updateRegisterResult", updateRegisterResult)
       if (!updateRegisterResult) {
         return;
       }
@@ -109,6 +111,21 @@ const ModalFormComponent = ({ closeModal }) => {
                 <small className="text-danger">Numero telefónico requerido</small>
               )}
             </div>
+
+            <div className="mb-3">
+              <label htmlFor="image_Profile" className="form-label">
+                Foto de perfil
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                style={{ width: 300, height: 30, marginTop: -10 }}
+                id="image_Profile"
+                name="image_Profile"
+                {...register("image_Profile")}
+              />
+            </div>
+
 
             <input type="hidden" defaultValue="true" {...register("complement")} />
 
