@@ -1,13 +1,10 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import sharp from 'sharp';
-import path from "path";
-import fs from 'fs';
+
 import { createAccessToken } from "../libs/jwt.js";
 import { TOKEN_SECRET } from "../config.js";
-import { fileURLToPath } from 'url';
-
+import { helperImg } from "../libs/resize.js";
 
 export const register = async (req, res) => {
   const { name, firstName, lastName, CURP, email, password } = req.body;
@@ -97,48 +94,12 @@ export const login = async (req, res) => {
 };
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const helperImg = async (filePath, fileName, size, userId) => {
-  // Obtiene la ruta del directorio de salida donde se guardarán los archivos redimensionados
-  const outputDir = path.resolve(__dirname, `../../public/img/${userId}`);
-  // Obtiene la ruta del archivo redimensionado
-  const outputPath = path.resolve(outputDir, fileName);
-  // Obtiene la ruta del archivo redimensionado en la ruta temporal
-  const tempPath = path.resolve(outputDir, `temp_${fileName}`);
-
-  try {
-    // Crea el directorio de salida si no existe
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir);
-    }
-
-    // Redimensiona la imagen y guarda en la ruta temporal
-    await sharp(filePath)
-      .resize(size, size)
-      .toFile(tempPath);
-
-    // Elimina el archivo original
-    fs.unlinkSync(filePath);
-    // Renombra el archivo redimensionado a la ruta de salida final
-    fs.renameSync(tempPath, outputPath);
-
-    console.log('Imagen redimensionada y reemplazada correctamente.');
-  } catch (error) {
-    console.error('Error al redimensionar la imagen:', error);
-  }
-};
-
-
-
-
 export const updateRegister = async (req, res) => {
   try {
     // Corregir la ruta de la imagen antes de guardarla en la base de datos
     const updatedImagePath = req.file.path.replace(/\\/g, "/");
 
-    helperImg(req.file.path, req.file.filename, 300, req.params.id);
+    helperImg(req.file.path, req.file.filename, 100, req.params.id);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,

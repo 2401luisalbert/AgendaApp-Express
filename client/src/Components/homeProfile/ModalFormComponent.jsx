@@ -6,6 +6,7 @@ import Loader from "./../Loader";
 const ModalFormComponent = ({ closeModal }) => {
   const { updateRegister, user, errors: registerErrors } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const {
     register,
@@ -14,22 +15,34 @@ const ModalFormComponent = ({ closeModal }) => {
   } = useForm();
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log("values", values)
     try {
       setLoading(true);
-      const updateRegisterResult = await updateRegister(user.id, values);
-      console.log("updateRegisterResult", updateRegisterResult)
+
+      const formData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      formData.append("image_Profile", selectedFile);
+
+      const updateRegisterResult = await updateRegister(user.id, formData);
+
       if (!updateRegisterResult) {
         return;
       }
+
       closeModal();
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-    
   });
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   return (
     <section>
@@ -44,7 +57,7 @@ const ModalFormComponent = ({ closeModal }) => {
           ))}
 
           <form onSubmit={onSubmit}>
-            <div className="mb-3">
+          <div className="mb-3">
               <label htmlFor="INE_CIC" className="form-label">
                 INE_CIC
               </label>
@@ -122,10 +135,9 @@ const ModalFormComponent = ({ closeModal }) => {
                 style={{ width: 300, height: 30, marginTop: -10 }}
                 id="image_Profile"
                 name="image_Profile"
-                {...register("image_Profile")}
+                onChange={handleFileChange}
               />
             </div>
-
 
             <input type="hidden" defaultValue="true" {...register("complement")} />
 
