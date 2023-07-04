@@ -28,6 +28,7 @@ const storage = multer.diskStorage({
       cb(null, `${Date.now()}.${ext}`);
     } catch (error) {
       cb(error);
+      console.log("chido")
     }
   },
 });
