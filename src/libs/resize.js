@@ -29,8 +29,6 @@ export const helperImg = async (filePath, fileName, size, userId) => {
     fs.unlinkSync(filePath);
     // Renombra el archivo redimensionado a la ruta de salida final
     fs.renameSync(tempPath, outputPath);
-
-    console.log('Imagen redimensionada y reemplazada correctamente.');
   } catch (error) {
     console.error('Error al redimensionar la imagen:', error);
   }

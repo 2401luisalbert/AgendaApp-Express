@@ -32,6 +32,7 @@ function RegisterFormComponent() {
       setLoading(true);
       const signupResult = await signup(values);
       if (!signupResult) {
+        setShowPass(false)
         return;
       }
       navigate("/");

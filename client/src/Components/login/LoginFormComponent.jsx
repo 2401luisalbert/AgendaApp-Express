@@ -25,37 +25,40 @@ function LoginFormComponent() {
   const handleShow = () => {
     setShowPass(!showPass);
   };
-  
+
   // Manejador del envío del formulario
   const onSubmit = handleSubmit(async (values) => {
     try {
       setLoading(true);
       const signupResult = await signin(values);
       if (!signupResult) {
-        setLoading(false);
+        setShowPass(false);
         return;
       }
-      setLoading(false);
       navigate("/profile");
     } catch (error) {
       console.log(error); // Manejar el error de acuerdo a tus necesidades
+    } finally {
+      setLoading(false);
     }
   });
 
   return (
-    <section>
+    <section className="d-flex align-items-center justify-content-center flex-column col-12">
+      
+      <div className="col-10">
+            {loginErrors.map((error, i) => (
+              <p className="alert alert-danger p-2 m-2" key={i}>
+                {error}
+              </p>
+            ))}
+      </div>
+      
       {loading ? (
         <Loader />
       ) : (
         <>
-          <h1 className="mt-2 text-center">Iniciar Sesión</h1>
-
-          {loginErrors.map((error, i) => (
-            <div className="alert alert-danger p-2 m-2" key={i}>
-              {error}
-            </div>
-          ))}
-
+          <h1>Iniciar sesión</h1>
           <form onSubmit={onSubmit}>
             {/* Campo CURP */}
             <div className="mb-3">
@@ -111,7 +114,7 @@ function LoginFormComponent() {
             {/* Botón Registrar */}
             <div className="d-flex justify-content-evenly mb-3">
               <button type="submit" className="btn btn-outline-dark">
-              Iniciar sesión
+                Iniciar sesión
               </button>
             </div>
             <Link to="/register">Registrarse</Link>

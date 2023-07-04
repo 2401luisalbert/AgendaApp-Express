@@ -14,17 +14,21 @@ const storage = multer.diskStorage({
 
       cb(null, directory);
     } catch (error) {
-      console.error("Error al obtener la información del usuario:", error);
       cb(error);
     }
   },
   filename: function (req, file, cb) {
-    const ext = file.originalname.split(".").pop().toLowerCase();
-    if (ext !== "jpg" && ext !== "jpeg") {
-      return cb(new Error("Solo se permiten archivos en formato JPG o PNG."));
-    }
+    try {
+      const ext = file.originalname.split(".").pop().toLowerCase();
+      if (ext !== "jpg" && ext !== "jpeg") {
+        const errorMessage = "Solo se permiten archivos en formato JPG o PNG.";
+        throw new Error(errorMessage);
+      }
 
-    cb(null, `${Date.now()}.${ext}`);
+      cb(null, `${Date.now()}.${ext}`);
+    } catch (error) {
+      cb(error);
+    }
   },
 });
 
