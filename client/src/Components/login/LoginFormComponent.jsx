@@ -117,7 +117,11 @@ function LoginFormComponent() {
                 Iniciar sesión
               </button>
             </div>
-            <Link to="/register">Registrarse</Link>
+            <div className="d-flex justify-content-evenly mb-b">
+              <Link to="/register" className="mt-4">Registrarse</Link>
+              <Link to="/forgetpass" className="mt-4">Olvide mi contraseña</Link>
+            </div>
+            
           </form>
         </>
       )}

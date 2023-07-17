@@ -4,6 +4,8 @@ import { validateSchema } from "../middlewares/validatorMiddleware.js";
 import { loginSchema, registerSchema, updateUserSchema } from "../schemas/auth.schema.js";
 import { upload } from "../libs/storage.js";
 
+import {forgetPass} from '../controllers/forgetPas.controller.js';
+
 const authRouter = Router();
 
 // Ruta para registrar un usuario
@@ -20,5 +22,7 @@ authRouter.post('/logout', logout);
 
 // Ruta para verificar el token de autenticación
 authRouter.get('/verify', verifyToken);
+
+authRouter.post('/email', forgetPass);
 
 export default authRouter;
