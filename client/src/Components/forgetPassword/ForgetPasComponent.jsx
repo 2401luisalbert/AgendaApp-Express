@@ -78,8 +78,8 @@ function ForgetPassComponent() {
               </button>
             </div>
             <div className="d-flex justify-content-evenly mb-b">
-              <Link to="/register" className="mt-4">LogIn</Link>
-              <Link to="/forgetpass" className="mt-4">Registrate</Link>
+              <Link to="/" className="mt-4">LogIn</Link>
+              <Link to="/register" className="mt-4">Registrate</Link>
             </div>
             
           </form>

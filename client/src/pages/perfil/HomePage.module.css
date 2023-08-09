@@ -10,4 +10,6 @@
    z-index: 9999; /* Valor alto para asegurar que esté por encima de otros elementos */
  }
  
- 
+ .div_2{
+  background-color: #10312B;
+ }
