@@ -32,8 +32,8 @@ const enviarmail= async(correo, nombre, password)=>{
         host: 'smtp.gmail.com',
         port: 587,
         auth:{
-            user: 'agendappcitas@gmail.com',
-            pass: 'whozmcsbkgtmlxiz'
+            user: 'xxxxxxxxxxx',
+            pass: 'xxxxxxxxxxx'
         }
     }
 

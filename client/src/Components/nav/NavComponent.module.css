@@ -1,0 +1,18 @@
+.color__nav{
+    background-color: #10312B;
+}
+
+.color__text{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 100%;
+    transition: .2s;
+}
+
+.color__text:hover{
+    color: #DDC9A3;
+}
+
+.toggleButton {
+    margin-bottom: 1rem; /* Agrega espacio debajo del botón */
+  }
